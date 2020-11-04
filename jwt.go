@@ -62,7 +62,7 @@ func (e EasyToken) GetToken() (string, error) {
 		Issuer:    e.Username,
 	}
 
-	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString([]byte(SECRETKEY))
 	if err != nil {
 		log.Fatal(err)
