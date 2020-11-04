@@ -4,13 +4,12 @@
 [![Coverage Status](https://coveralls.io/repos/juusechec/jwt-beego/badge.svg?branch=master)](https://coveralls.io/r/juusechec/jwt-beego?branch=master)
 
 # jwt-beego
+
 A simple implementation of dgrijalva/jwt-go for beego.
 
 Steps to implement:
 
-1) Create a RSA key pair with commands used in file ***generar_key.log***
-
-2) Generate a REST "path"/route with POST action in specific controller to return token, in this case the route was /user/getToken:
+Generate a REST "path"/route with POST action in specific controller to return token, in this case the route was /user/getToken:
 
 ```go
 // ./controllers/user.go
@@ -51,7 +50,7 @@ func (u *UserController) GetToken() {
 ...
 ```
 
-3) Add a validation token in each controller that needs it. This is execute through ***Prepare*** function.
+3. Add a validation token in each controller that needs it. This is execute through **_Prepare_** function.
 
 ```go
 // ./controllers/my_restricted_controller.go
@@ -83,7 +82,7 @@ func (c *TipoCancelacionSemestreController) Prepare() {
 
 With that this is finished, but if you want to all controllers have the same validation can you do:
 
-1) Configure a new package.
+1. Configure a new package.
 
 ```go
 //./myBeego/controller.go
@@ -126,7 +125,7 @@ func (c *Controller) Prepare() {
 
 ```
 
-2) Configure call to new Controller in all controllers:
+2. Configure call to new Controller in all controllers:
 
 ```go
 //./controllers/miObjeto.go
@@ -148,8 +147,10 @@ type MiObjetoController struct {
 ```
 
 ## Example of use:
+
 - https://github.com/juusechec/jwt-beego-implementation
 
 Based on:
-* https://github.com/someone1/gcp-jwt-go
-* https://github.com/dgrijalva/jwt-go
+
+- https://github.com/someone1/gcp-jwt-go
+- https://github.com/dgrijalva/jwt-go

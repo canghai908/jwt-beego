@@ -1,12 +1,10 @@
 package jwtbeego
 
 import (
-	"crypto/rsa"
 	"errors"
-	"io/ioutil"
 	"log"
 
-	"github.com/dgrijalva/jwt-go"
+	jwt "github.com/dgrijalva/jwt-go"
 )
 
 // EasyToken is an Struct to encapsulate username and expires as parameter
@@ -19,38 +17,41 @@ type EasyToken struct {
 
 // https://gist.github.com/cryptix/45c33ecf0ae54828e63b
 // location of the files used for signing and verification
-const (
-	privKeyPath = "keys/rsakey.pem"     // openssl genrsa -out app.rsa keysize
-	pubKeyPath  = "keys/rsakey.pem.pub" // openssl rsa -in app.rsa -pubout > app.rsa.pub
-)
+// const (
+// 	privKeyPath = "keys/rsakey.pem"     // openssl genrsa -out app.rsa keysize
+// 	pubKeyPath  = "keys/rsakey.pem.pub" // openssl rsa -in app.rsa -pubout > app.rsa.pub
+// )
 
-var (
-	verifyKey    *rsa.PublicKey
-	mySigningKey *rsa.PrivateKey
-)
+// var (
+// 	verifyKey    *rsa.PublicKey
+// 	mySigningKey *rsa.PrivateKey
+// )
 
-func init() {
-	verifyBytes, err := ioutil.ReadFile(pubKeyPath)
-	if err != nil {
-		log.Fatal(err)
-	}
+// func init() {
+// 	verifyBytes, err := ioutil.ReadFile(pubKeyPath)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	verifyKey, err = jwt.ParseRSAPublicKeyFromPEM(verifyBytes)
-	if err != nil {
-		log.Fatal(err)
-	}
+// 	verifyKey, err = jwt.ParseRSAPublicKeyFromPEM(verifyBytes)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	signBytes, err := ioutil.ReadFile(privKeyPath)
+// 	signBytes, err := ioutil.ReadFile(privKeyPath)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	mySigningKey, err = jwt.ParseRSAPrivateKeyFromPEM(signBytes)
-	if err != nil {
-		log.Fatal(err)
-	}
-}
+// 	mySigningKey, err = jwt.ParseRSAPrivateKeyFromPEM(signBytes)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// }
+
+//SECRETKEY key
+const SECRETKEY string = "168df927757ea638d2b1f4ef77f65dd79e7b99b7a546b40053dccc1c9a7d109a"
 
 // GetToken is a function that exposes the method to get a simple token for jwt
 func (e EasyToken) GetToken() (string, error) {
@@ -62,7 +63,7 @@ func (e EasyToken) GetToken() (string, error) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
-	tokenString, err := token.SignedString(mySigningKey)
+	tokenString, err := token.SignedString([]byte(SECRETKEY))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -79,7 +80,7 @@ func (e EasyToken) ValidateToken(tokenString string) (bool, string, error) {
 	}
 
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		return verifyKey, nil
+		return []byte(SECRETKEY), nil
 	})
 
 	if token == nil {

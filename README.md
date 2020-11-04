@@ -6,13 +6,12 @@
 You can read Docs in [english](README-en_US.md).
 
 # jwt-beego
+
 Una implementación simple de dgrijalva/jwt-go para beego.
 
 Pasos para implementar:
 
-1) Crear una llave RSA con los comandos de ***generar_key.log***
-
-2) Generar una ruta con action POST en el controlador especificado, en este caso la ruta elegida fue /user/getToken:
+Generar una ruta con action POST en el controlador especificado, en este caso la ruta elegida fue /user/getToken:
 
 ```go
 // ./controllers/user.go
@@ -21,7 +20,7 @@ package controllers
 import (
 	...
 
-	"github.com/juusechec/jwt-beego"
+	"github.com/canghai908/jwt-beego"
 )
 
 ...
@@ -53,7 +52,7 @@ func (u *UserController) GetToken() {
 ...
 ```
 
-3) Agregar la validación del token en cada controlador que se necesite. Esto se hace a través de la función ***Prepare***.
+3. Agregar la validación del token en cada controlador que se necesite. Esto se hace a través de la función **_Prepare_**.
 
 ```go
 // ./controllers/my_restricted_controller.go
@@ -62,7 +61,7 @@ package controllers
 import (
 	...
 
-	"github.com/juusechec/jwt-beego"
+	"github.com/canghai908/jwt-beego"
 )
 
 func (c *TipoCancelacionSemestreController) Prepare() {
@@ -85,7 +84,7 @@ func (c *TipoCancelacionSemestreController) Prepare() {
 
 Con esto ya estaría terminado, pero si se quiere hacer que todos los controladores tengan la misma validación se puede hacer:
 
-1) Configurar un nuevo paquete.
+1. Configurar un nuevo paquete.
 
 ```go
 //./myBeego/controller.go
@@ -128,7 +127,7 @@ func (c *Controller) Prepare() {
 
 ```
 
-2) Configurar llamado del nuevo Controller en todos los controladores:
+2. Configurar llamado del nuevo Controller en todos los controladores:
 
 ```go
 //./controllers/miObjeto.go
@@ -137,8 +136,8 @@ package controllers
 
 import (
 	...
-	"github.com/juusechec/jwt-beego-implementation/myBeego"
-	"github.com/juusechec/jwt-beego"
+	"github.com/canghai908/jwt-beego-implementation/myBeego"
+	"github.com/canghai908/jwt-beego"
 )
 
 type MiObjetoController struct {
@@ -150,8 +149,10 @@ type MiObjetoController struct {
 ```
 
 ## Ejemplo de uso:
+
 - https://github.com/juusechec/jwt-beego-implementation
 
 Se basa en:
-* https://github.com/someone1/gcp-jwt-go
-* https://github.com/dgrijalva/jwt-go
+
+- https://github.com/someone1/gcp-jwt-go
+- https://github.com/dgrijalva/jwt-go

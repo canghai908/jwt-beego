@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/juusechec/jwt-beego"
+	jwtbeego "github.com/canghai908/jwt-beego"
 )
 
 var (
